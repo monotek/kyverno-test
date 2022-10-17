@@ -1,0 +1,24 @@
+global:
+  fullnameOverride: kyverno-policy-reporter
+  labels:
+    app: kyverno
+
+metrics:
+  enabled: true
+  mode: detailed
+
+monitoring:
+  enabled: true
+  grafana:
+    dashboards:
+      enabled: false
+  serviceMonitor:
+    labels:
+      release: kps
+
+resources:
+  limits:
+    memory: 512Mi
+  requests:
+    memory: 512Mi
+    cpu: 100m

@@ -1,0 +1,24 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  # - check-k8s-api-deprecations.yaml
+  - disallow-host-ports.yaml
+  - disallow-hostpath-mounts.yaml
+  - disallow-latest-tag.yaml
+  - disallow-namespace-default.yaml
+  - disallow-nodeports.yaml
+  - disallow-privileged-containers.yaml
+  - disallow-privilege-escalation.yaml
+  - disallow-proc-mount.yaml
+  - disallow-sysctls.yaml
+  - require-drop-all-cap.yaml
+  - require-group-non-root.yaml
+  - require-label-app.yaml
+  - require-pod-disruptionbudget.yaml
+  - require-pod-probes-to-be-different.yaml
+  - require-pod-probes.yaml
+  - require-requests-and-limits-for-emptydir.yaml
+  - require-requests-and-limits.yaml
+  - require-root-filesystem-readonly.yaml
+  - require-user-non-root.yaml
