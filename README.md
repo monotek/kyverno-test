@@ -21,4 +21,4 @@ setups kind cluster with:
 
 ## cleanup
 
-* `kind deletel cluster --name kyverno`
+* `kind delete cluster --name kyverno`
