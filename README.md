@@ -6,12 +6,12 @@ setups kind cluster with:
 * kube-prometehus-stack
 * kyverno
 * kyverno policy reporter
-* some kyverno policies
+* some [kyverno policies](https://github.com/monotek/kyverno-test/tree/main/policies)
 
 ## requirements
 
-* [kind](https://github.com/kubernetes-sigs/kind/)
 * [helm](https://github.com/helm/helm)
+* [kind](https://github.com/kubernetes-sigs/kind/)
 * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/#install-kubectl-binary-with-curl-on-linux)
 * [kustomize](https://github.com/kubernetes-sigs/kustomize)
 
