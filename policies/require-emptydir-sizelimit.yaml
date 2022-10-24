@@ -1,0 +1,36 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-sizelimit-on-emptydir
+  annotations:
+    policies.kyverno.io/title: Require sizelimit for emptyDir
+    policies.kyverno.io/category: Other
+    policies.kyverno.io/severity: medium
+    policies.kyverno.io/minversion: 1.6.0
+    kyverno.io/kyverno-version: 1.7.0
+    kyverno.io/kubernetes-version: "1.23"
+    policies.kyverno.io/subject: Pod
+    policies.kyverno.io/description: >-
+      Pods which mount emptyDir volumes may be allowed to potentially overrun
+      the medium backing the emptyDir volume. This sample ensures that any
+      initContainers or containers mounting an emptyDir volume have
+      sizeLimit set.
+spec:
+  background: true
+  failurePolicy: Ignore
+  validationFailureAction: audit
+  rules:
+    - name: require-sizelimit-on-emptydir
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+      validate:
+        message: >-
+          Pods mounting emptyDir volumes must specify sizeLimit.
+        pattern:
+          spec:
+            =(volumes):
+              - =(emptyDir):
+                  sizeLimit: "?*"

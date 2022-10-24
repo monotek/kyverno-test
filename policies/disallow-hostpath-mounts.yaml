@@ -14,9 +14,9 @@ metadata:
       Using host resources can be used to access shared data or escalate privileges
       and should not be allowed. This policy ensures no hostPath volumes are in use.
 spec:
-  validationFailureAction: audit
   background: true
   failurePolicy: Ignore
+  validationFailureAction: audit
   rules:
     - name: host-path
       match:

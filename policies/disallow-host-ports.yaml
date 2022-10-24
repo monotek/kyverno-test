@@ -14,9 +14,9 @@ metadata:
       allowed, or at minimum restricted to a known list. This policy ensures the `hostPort`
       field is unset or set to `0`.
 spec:
-  validationFailureAction: audit
   background: true
   failurePolicy: Ignore
+  validationFailureAction: audit
   rules:
     - name: host-ports-none
       match:

@@ -14,9 +14,9 @@ metadata:
       is an anti-pattern and often results in app problems in the future. This policy
       checks that liveness and readiness probes are not equal.
 spec:
-  validationFailureAction: audit
   background: true
   failurePolicy: Ignore
+  validationFailureAction: audit
   rules:
     - name: validate-probes
       match:

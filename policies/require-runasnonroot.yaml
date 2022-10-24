@@ -1,0 +1,38 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-runasnonroot
+spec:
+  background: true
+  failurePolicy: Ignore
+  validationFailureAction: audit
+  rules:
+    - name: require-runasnonroot-container
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+      validate:
+        message: >-
+          Running as root is not allowed. The fields spec.containers[*].securityContext.runAsNonRoot,
+          and spec.initContainers[*].securityContext.runAsNonRoot must be `true`.
+        pattern:
+          spec:
+            containers:
+              securityContext:
+                runAsNonRoot: true
+            =(initContainers):
+              - (name): "!istio-init"
+                securityContext:
+                  runAsNonRoot: true
+      exclude:
+        any:
+          - resources:
+              kinds:
+                - Pod
+              namespaces:
+                - conntrack-stats-exporter
+              selector:
+                matchLabels:
+                  app: conntrack-stats-exporter

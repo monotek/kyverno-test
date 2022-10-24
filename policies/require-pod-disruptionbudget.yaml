@@ -14,9 +14,9 @@ metadata:
       is maintained at all times. This policy checks all incoming Deployments
       to ensure they have a matching, preexisting PodDisruptionBudget.
 spec:
-  validationFailureAction: audit
   background: true
   failurePolicy: Ignore
+  validationFailureAction: audit
   rules:
     - name: require-pdb
       match:
@@ -24,10 +24,13 @@ spec:
           kinds:
             - Deployment
       preconditions:
-        any:
-          - key: "{{request.operation}}"
+        all:
+          - key: "{{ request.operation || 'BACKGROUND' }}"
             operator: Equals
             value: CREATE
+          - key: "{{ request.object.spec.replicas }}"
+            operator: GreaterThanOrEquals
+            value: 3
       context:
         - name: pdb_count
           apiCall:

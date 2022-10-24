@@ -16,9 +16,9 @@ metadata:
       and the default (empty) Namespace should not be used. This policy validates that Pods
       specify a Namespace name other than `default`.
 spec:
-  validationFailureAction: enforce
   background: true
   failurePolicy: Ignore
+  validationFailureAction: enforce
   rules:
     - name: validate-namespace
       match:

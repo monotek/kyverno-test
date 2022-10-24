@@ -17,9 +17,9 @@ metadata:
       This policy validates that all containers have liveness and readiness probes by
       ensuring the `periodSeconds` field is greater than zero.
 spec:
-  validationFailureAction: audit
   background: true
   failurePolicy: Ignore
+  validationFailureAction: audit
   rules:
     - name: validate-livenessProbe-readinessProbe
       match:
@@ -31,7 +31,8 @@ spec:
         pattern:
           spec:
             containers:
-              - livenessProbe:
+              - (name): "!istio-proxy"
+                livenessProbe:
                   =(periodSeconds): ">0"
                 readinessProbe:
                   =(periodSeconds): ">0"

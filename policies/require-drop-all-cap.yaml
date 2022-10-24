@@ -14,9 +14,9 @@ metadata:
       This policy ensures that all containers explicitly specify the `drop: ["ALL"]`
       ability.
 spec:
-  validationFailureAction: audit
   background: true
   failurePolicy: Ignore
+  validationFailureAction: audit
   rules:
     - name: require-drop-all
       match:

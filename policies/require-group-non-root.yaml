@@ -15,9 +15,9 @@ metadata:
       greater than zero (i.e., non root). A known issue prevents a policy such as this
       using `anyPattern` from being persisted properly in Kubernetes 1.23.0-1.23.2.
 spec:
-  validationFailureAction: audit
   background: true
   failurePolicy: Ignore
+  validationFailureAction: audit
   rules:
     - name: check-runasgroup
       match:
@@ -29,25 +29,19 @@ spec:
         message: >-
           Running with root group IDs is disallowed. The fields
           spec.securityContext.runAsGroup, spec.containers[*].securityContext.runAsGroup
-          and spec.initContainers[*].securityContext.runAsGroup must be set to a value
-          greater than zero.
-        anyPattern:
-          - spec:
-              securityContext:
-                runAsGroup: ">0"
-              =(initContainers):
-                - =(securityContext):
-                    =(runAsGroup): ">0"
-              containers:
-                - =(securityContext):
-                    =(runAsGroup): ">0"
-          - spec:
-              =(initContainers):
-                - securityContext:
-                    runAsGroup: ">0"
-              containers:
-                - securityContext:
-                    runAsGroup: ">0"
+          and spec.initContainers[*].securityContext.runAsGroup must be unset or set to
+          a value greater than zero.
+        pattern:
+          spec:
+            =(securityContext):
+              =(runAsGroup): ">0"
+            =(initContainers):
+              - (name): "!istio-init"
+                =(securityContext):
+                  =(runAsGroup): ">0"
+            containers:
+              - =(securityContext):
+                  =(runAsGroup): ">0"
       exclude:
         any:
           - resources:
